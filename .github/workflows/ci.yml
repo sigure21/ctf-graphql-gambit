@@ -1,0 +1,37 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  static:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm test
+      - run: FLAG='flag{ci_config_only}' PROXY_SECRET='0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef' docker compose config --quiet
+
+  smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Build, start, and verify
+        run: node scripts/ctf.mjs up --port 18091
+      - name: Show logs on failure
+        if: failure()
+        run: node scripts/ctf.mjs logs
+      - name: Stop containers
+        if: always()
+        run: node scripts/ctf.mjs down

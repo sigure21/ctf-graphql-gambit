@@ -1,0 +1,26 @@
+{
+  "name": "ctf-graphql-gambit",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "license": "MIT",
+  "scripts": {
+    "ctf": "node scripts/ctf.mjs",
+    "up": "node scripts/ctf.mjs up",
+    "verify": "node scripts/ctf.mjs verify",
+    "status": "node scripts/ctf.mjs status",
+    "flags": "node scripts/ctf.mjs flags",
+    "logs": "node scripts/ctf.mjs logs",
+    "down": "node scripts/ctf.mjs down",
+    "reset": "node scripts/ctf.mjs reset",
+    "doctor": "node scripts/ctf.mjs doctor",
+    "start:gateway": "node src/gateway.mjs",
+    "start:evaluator": "node src/evaluator.mjs",
+    "test": "node scripts/static-check.mjs",
+    "test:live": "node tests/challenge.mjs",
+    "solve": "node solver/solve.mjs"
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}
